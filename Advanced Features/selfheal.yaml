@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: daneshtoshniwal-server1
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: daneshtoshniwal-server1
+  template:
+    metadata:
+      labels:
+        app: daneshtoshniwal-server1
+    spec:
+      containers:
+      - name: daneshtoshniwal-server1
+        image: daneshtoshniwal/server1:v1
+        ports:
+        - containerPort: 80
+        livenessProbe:
+          httpGet:
+            path: /healthz
+            port: 80
+          initialDelaySeconds: 5
+          periodSeconds: 10
+          failureThreshold: 3
+        readinessProbe:
+          httpGet:
+            path: /readiness
+            port: 80
+          initialDelaySeconds: 5
+          periodSeconds: 10
+          failureThreshold: 3
+---
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: daneshtoshniwal-server1-pdb
+spec:
+  minAvailable: 2  # Ensure at least two pods are always available during disruptions
+  selector:
+    matchLabels:
+      app: daneshtoshniwal-server1
