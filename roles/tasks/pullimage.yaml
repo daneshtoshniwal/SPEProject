@@ -1,0 +1,11 @@
+---
+- name: Pull backend image
+  docker_image:
+    name: daneshtoshniwal/server1:latest
+    source: pull
+
+- name: Pull frontend image
+  docker_image:
+    name: daneshtoshniwal/client1:latest
+    source: pull
+

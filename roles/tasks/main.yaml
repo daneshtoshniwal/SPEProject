@@ -1,0 +1,4 @@
+---
+#- include_tasks: pullimage.yaml
+- include_tasks: apply1.yaml
+- include_tasks: apply2.yaml
